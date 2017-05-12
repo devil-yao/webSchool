@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dwh.tech.dao.CartDao" >
+    
+    <select id="select" resultType="com.dwh.tech.entity.Cart">
+    	select * from cart where userId = #{userId} and status = 1
+    	<if test="classId != null">
+    		and classId = #{classId}
+    	</if>
+    	<if test="techId != null">
+    		and techId = #{techId}
+    	</if>
+    </select>
+    
+    <insert id="add" parameterType="com.dwh.tech.entity.Cart">
+    		insert into cart(userId,classId,status,techId) values(#{cart.userId},#{cart.classId},#{cart.status},#{cart.techId});
+    </insert>
+    
+    <select id="selectPage" resultType="com.dwh.tech.entity.Cart">
+    	select * from cart where userId = #{userId} and status = #{status} limit #{start},#{pageCount}
+    </select>
+    
+    <select id="getByClassId" resultType="com.dwh.tech.entity.Cart">
+    	select * from cart where classId = #{classId} and userId = #{userId}
+    </select>
+    
+    <select id="count" resultType="int">
+    	select count(1) from cart where userId = #{userId} and status = 1
+    </select>
+    
+    <delete id="deleteCart">
+    	delete from cart where cartId = #{cartId}
+    </delete>
+    
+    <update id="updateCart">
+    	update cart 
+    	<set>
+    		<if test="status != null">
+    			status = #{status}
+    		</if>
+    	</set>
+    	where cartId=#{cartId}
+    </update>
+    
+</mapper>

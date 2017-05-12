@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dwh.tech.dao.ReviewDao" >
+
+<select id="countAll" resultType="int"> 
+	select count(id) from review
+</select>
+
+
+<select id="getPage" parameterType="com.dwh.tech.entity.PageRequest" resultType="com.dwh.tech.entity.Review">
+	select * from review order by revTime desc limit #{request.start},#{request.pageCount} 
+</select>
+
+<insert id="insert" parameterType="com.dwh.tech.entity.Review">
+insert into review(userId,classId,review,revTime)
+values(#{review.userId},#{review.classId},#{review.review},#{review.revTime})
+</insert>
+</mapper>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dwh.tech.dao.TeacherDao" >
+    
+    <select id="getAllTeacher" resultType="com.dwh.tech.entity.User">
+    	select * from t_user where authority = 2
+    </select>
+    
+    <select id="count" resultType="int">
+    	select count(id) from t_user where authority = 2
+    </select>
+    
+    <select id="countByCateId" resultType="int">
+    	select count(id) from t_user where authority = 2 and cateId = #{cateId}
+    </select>
+    
+    <select id="getAllTeacherPage" resultType="com.dwh.tech.entity.User">
+    	select * from t_user where authority = 2 limit #{request.start},#{request.pageCount}
+    </select>
+    
+    <select id="getTeacherPageByParam" resultType="com.dwh.tech.entity.User">
+    	select * from t_user where authority = 2 
+    		<if test="user.login_name != null">
+    		and	login_name like concat('%',#{user.login_name},'%')
+    		</if>
+    		<if test="user.cateId != null">
+    		<if test="user.cateId != 0">
+    		and cateId = #{user.cateId}	 
+    		</if>
+    		</if>
+    	limit #{request.start},#{request.pageCount}
+    </select>
+    
+    <select id="getByCateId" resultType="com.dwh.tech.entity.User">
+    	select * from t_user where authority = 2 
+    		<if test="cateId != 0">
+    			and cateId = #{cateId}
+    		</if>
+    	 limit #{request.start},#{request.pageCount}
+    </select>
+    
+    <update id="update" parameterType="com.dwh.tech.entity.User">
+    	update t_user 
+    	<set>
+    		<if test="user.login_name != null">
+    			 login_name=#{user.login_name},
+    		</if>
+    		<if test="user.phone != null">
+    			phone=#{user.phone},
+    		</if>
+    		<if test="user.head != null">
+    			head = #{user.head},
+    		</if>
+    		<if test="user.cateId != 0">
+    			cateId = #{user.cateId},
+    		</if>
+    		<if test="user.dec != null">
+    			`dec` = #{user.dec}
+    		</if>
+    	</set>
+    	where id = #{user.id}
+    </update>
+    
+</mapper>

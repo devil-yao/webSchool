@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dwh.tech.dao.UserDao" >
+    <select id="getUser" parameterType="string" resultType="com.dwh.tech.entity.User">
+    	select * from t_user where 1=1
+    	<if test="loginName != null">
+    		and login_name = #{loginName}
+    	</if> 
+    	<if test="phone != null">
+    		and phone = #{phone}
+    	</if> 
+    	 and password = md5(#{password})
+    </select>
+     
+    <insert id="insert" parameterType="com.dwh.tech.entity.User">
+    	insert into t_user(login_name,password,authority,phone,sex,head,`dec`) values(#{user.login_name},md5(#{user.password}),#{user.authority},#{user.phone},#{user.sex},#{user.head},#{user.dec})
+    </insert>
+    
+    <select id="check" parameterType="string" resultType="int">
+    	select count(id) from t_user where 1 = 1
+    		<if test="phone != null">
+    			and phone = #{phone}
+    		</if>
+    		<if test="loginName != null">
+    			and login_name = #{loginName}
+    		</if>
+    </select>
+    
+    <update id="update" parameterType="com.dwh.tech.entity.User">
+    	update t_user 
+    	<set>
+    		<if test="user.login_name != null">
+    			 login_name=#{user.login_name},
+    		</if>
+    		<if test="user.phone != null">
+    			phone=#{user.phone},
+    		</if>
+    		<if test="user.head != null">
+    			head = #{user.head},
+    		</if>
+    		<if test="user.email">
+    			email = #{user.email},
+    		</if>
+    		<if test="user.sex != null">
+    			sex = #{user.sex}
+    		</if>
+    	</set>
+    	where id = #{user.id}
+    </update>
+    
+    <update id="updatePwd">
+    	update t_user 
+    	set password = md5(#{password})
+    	where id = #{id}
+    </update>
+    
+    <select id="getById" parameterType="int" resultType="com.dwh.tech.entity.User">
+    	select * from t_user where id = #{userId} and authority = 1
+    </select>
+    <select id="getTech" parameterType="int" resultType="com.dwh.tech.entity.User">
+    	select * from t_user where id = #{userId} and authority = 2
+    </select>
+    <select id="getByParam" parameterType="com.dwh.tech.entity.User" resultType="com.dwh.tech.entity.User">
+    	select * from t_user where authority = 1
+	    	<if test="user.id != null">
+	    		and id = #{user.id}
+	    	</if>
+    		<if test="user.login_name != null">
+    			and login_name = #{user.login_name}
+    		</if>
+    		<if test="user.phone != null">
+    			and phone = #{user.phone}
+    		</if>
+    		<if test="user.status != null">
+    			and status = #{user.status}
+    		</if>
+    </select>
+    
+    <update id="updateStatus">
+    	update t_user set status = #{status} where id = #{id}
+    </update>
+    
+</mapper>

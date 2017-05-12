@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dwh.tech.dao.LessonDao" >
+    
+    <select id="getPage" resultType="com.dwh.tech.entity.Lesson" parameterType="com.dwh.tech.entity.PageRequest">
+		select * from lesson <where>
+			<if test="request.rule != null">
+				className like concat('%',#{request.rule},'%')
+			</if>
+		</where>
+		limit #{request.start},#{request.pageCount}
+    </select>
+    
+    <select id="getPageByCateId" resultType="com.dwh.tech.entity.Lesson">
+		select * from lesson where cateId = #{cateId}
+		limit #{request.start},#{request.pageCount}
+    </select>
+    <select id="getGoodCourse" resultType="com.dwh.tech.entity.Lesson">
+		select * from lesson
+		limit #{request.start},#{request.pageCount}
+    </select>
+   
+   <select id="getTotal" parameterType="string" resultType="int">
+   select count(classId) from lesson <where>
+			<if test="rule != null">
+				className like concat('%',#{rule},'%')
+			</if>
+		</where>
+   </select>
+   
+   <select id="getTotalByCateId" parameterType="int" resultType="int">
+   select count(classId) from lesson where cateId = #{cateId}
+   </select>
+   
+   <select id="getById" parameterType="int" resultType="com.dwh.tech.entity.Lesson">
+   		select * from lesson where classId = #{classId}
+   </select>
+   
+   <select id="getByTecId" parameterType="int" resultType="com.dwh.tech.entity.Lesson">
+   		select * from lesson where techId = #{techId}
+   </select>
+   
+   <update id="updateNumLook" parameterType="int">
+   	update lesson set numLook = numLook+1 where classId = #{classId}
+   </update>
+   
+    <update id="updateNumBuy" parameterType="int">
+   	update lesson set numBuy = numBuy+1 where classId = #{classId}
+   </update>
+   
+    <select id="getPageByTecId" parameterType="int" resultType="com.dwh.tech.entity.Lesson">
+   		select * from lesson where techId = #{techId} limit #{start},#{pageCount}
+   </select>
+   
+    <select id="countMyLesson" parameterType="int" resultType="int">
+   		select count(classId) from lesson where techId = #{techId}
+   </select>
+   
+   <select id="selectId" resultType="int">
+   	select MAX(classId) from tech.lesson
+   </select>
+   
+   <insert id="insert" parameterType="com.dwh.tech.entity.Lesson">
+   	insert into lesson values(#{lesson.classId},#{lesson.techId},#{lesson.className},#{lesson.price},null,#{lesson.classNum},#{lesson.picture},#{lesson.status},#{lesson.techName},#{lesson.numBuy},#{lesson.numLook},#{lesson.cateId})
+   </insert>
+   
+</mapper>

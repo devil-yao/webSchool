@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dwh.tech.dao.OrderListDao" >
+	<insert id="insertOrder" parameterType="com.dwh.tech.entity.OrderList">
+		insert into orderList(orderNo,userId,classId,payTime,status,des) 
+		values(#{order.orderNo},#{order.userId},#{order.classId},#{order.payTime},#{order.status},#{order.des})
+	</insert> 
+	
+	<select id="selectByUserId" resultType="com.dwh.tech.entity.OrderList">
+		select * from orderList where userId = #{userId} 
+		<if test="status != null">
+			and status = #{status}
+		</if>
+		order by payTime desc limit #{start},#{pageCount} 
+	</select>   
+	
+	<select id="countAll" resultType="int">
+		select count(id) from orderList where userId = #{userId} 
+		<if test="status != null">
+		and	status = #{status}
+		</if>
+	</select>   
+	
+	<select id="searchByUserId" parameterType="com.dwh.tech.entity.OrderList" resultType="com.dwh.tech.entity.OrderList">
+		select * from orderList where 1=1
+		<if test=" order.userId != null">
+			and userId = #{order.userId}
+		</if>
+		<if test="order.orderNo">
+			and orderNo = #{order.orderNo}
+		</if>
+		<if test="order.status">
+			and status = #{order.status}
+		</if>
+	</select>
+	
+	<select id="getOne" resultType="com.dwh.tech.entity.OrderList">
+		select * from orderList where userId = #{userId} and classId = #{classId}
+	</select>
+	
+</mapper>
