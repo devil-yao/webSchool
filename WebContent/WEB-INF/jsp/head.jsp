@@ -98,7 +98,7 @@ $(function(){
 			type:"post",
 			data:{"userId":"${sessionScope.user.id}"},
 			success:function(rs){
-				$(".mm").text(rs.trim());
+				$(".mm").text($.trim(rs));
 				if($(".mm").text() != "0"){
 					$(".mm").show();
 				}

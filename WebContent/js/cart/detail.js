@@ -23,10 +23,10 @@ function getDetail(cur){
 							"<img src='/images/lesson/"+rs.list[i].head+"' style='cursor: pointer;' width='100px' height='80px' alt='lesson'/></td>" +
 							"<td class='cart_td_3'><a href='lessonDetail?classId="+rs.list[i].classId+"'>"+rs.list[i].lessonName+"</a><br />" +
 							"<td class='cart_td_5'>"+parseFloat(rs.list[i].price).toFixed(2)+"</td>" +
-							"<td class='cart_td_6'>"+rs.list[i].time+"</td>" +
+							"<td class='cart_td_6'>即买即看</td>" +
 							"<td class='cart_td_7'>"+rs.list[i].status+"</td>" +
 							"<td class='cart_td_8'><a href='javascript:deleteRow("+rs.list[i].cartId+");'>删除</a></td></tr>"+
-							"<div id='cart"+rs.list[i].cartId+"' style='display: inline-table;' >123456789</div>"
+							"<div id='cart"+rs.list[i].cartId+"' style='display: inline-table;' > </div>"
 							);
 				}
 				$("#shopping").append("<tr><td  colspan='3'><a href='javascript:deleteSelectRow()'><img src='images/cart/taobao_del.jpg' alt='delete'/></a></td>" +

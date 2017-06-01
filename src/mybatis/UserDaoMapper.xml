@@ -13,7 +13,7 @@
     </select>
      
     <insert id="insert" parameterType="com.dwh.tech.entity.User">
-    	insert into t_user(login_name,password,authority,phone,sex,head,`dec`) values(#{user.login_name},md5(#{user.password}),#{user.authority},#{user.phone},#{user.sex},#{user.head},#{user.dec})
+    	insert into t_user(login_name,password,authority,phone,sex,head,`dec`,cateId) values(#{user.login_name},md5(#{user.password}),#{user.authority},#{user.phone},#{user.sex},#{user.head},#{user.dec},#{user.cateId})
     </insert>
     
     <select id="check" parameterType="string" resultType="int">

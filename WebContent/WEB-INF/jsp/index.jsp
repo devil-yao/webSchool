@@ -33,6 +33,7 @@
 	.mbqh-qt ul li.li-3:hover,.mbqh-qt ul li.li-3.current{background: url("/static/inxweb/img/indexchange/li-3-xz.png") no-repeat top left;} */
 	.mbqh-qt ul li:hover a{text-decoration: none;}
 	.cc-l-wrap{width:267.5px height:149.2px}
+	
 </style>
 <div class="i-slide banner-slide">
 		<section>
@@ -117,12 +118,12 @@
 					<section class="b-f-link mt20">
 						<a href="javascript:void(0)" title="加入我们" >加入我们</a>|
 						<a href="javascript:void(0)" title="关于我们" >关于我们</a>|
-						<span>服务热线：400-900-8560</span>
-						<span>Email：1175912454@qq.com</span>
+						<span>服务热线：17721120095</span>
+						<span>Email：787767641@qq.com</span>
 						<span class="ml30"></span>
 					</section>
 					<section class="b-f-link mt10">
-						<span class="c-666">Powered by<a title="智慧树人教育网站" target="_blank" href="index.jsp" class="c-666">智慧树人教育网站</a></span>
+						<span class="c-666">Powered by<a title="智慧树人教育网站" target="_blank" href="index" class="c-666">智慧树人教育网站</a></span>
 						<!-- 统计代码 -->
 						</section>
 				</section>

@@ -1,8 +1,9 @@
-var time = 3599;
+
+var time = 899;
 var flag = true;
 function setTime() {
 	setInterval(function() {
-		if(time == 0){
+		if(time == -1){
 			flag=false;
 			showScore();
 		}
@@ -14,6 +15,7 @@ function setTime() {
 			time = time - 1;
 		}
 	}, 1000);
+	
 }
 
 function stop(){
@@ -78,6 +80,7 @@ function submitAnswer(){
 }
 
 function showScore(){
+	$(".prevent").removeAttr("onclick");
 	var all = $(":radio").length/4;
 	var total = all;
 	var item = $(":radio:checked");

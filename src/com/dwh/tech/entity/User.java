@@ -10,7 +10,7 @@ public class User implements Serializable{
 	private String password;
 	private String phone;
 	private Integer authority = 1;
-	private String head = "head.jpg";
+	private String head;
 	private String email;
 	private String sex = "男";
 	private String dec = "该用户还未写过简介";

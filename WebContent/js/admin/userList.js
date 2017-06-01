@@ -37,7 +37,7 @@ function update(btn,type){
 		data:{"userId":btn.value,"type":type},
 		type:"post",
 		success:function(rs){
-			if(rs == "success"){
+			if($.trim(rs) == "success"){
 				init();
 				alert("修改成功");
 			}else{

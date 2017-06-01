@@ -56,7 +56,7 @@
    		select count(classId) from lesson where techId = #{techId}
    </select>
    
-   <select id="selectId" resultType="int">
+   <select id="selectId" resultType="java.lang.Integer">
    	select MAX(classId) from tech.lesson
    </select>
    

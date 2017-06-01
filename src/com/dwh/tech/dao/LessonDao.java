@@ -29,7 +29,7 @@ public interface LessonDao {
 
 	int countMyLesson(@Param("techId")int techId);
 	
-	int selectId();
+	Integer selectId();
 	
 	void insert(@Param("lesson")Lesson lesson);
 }

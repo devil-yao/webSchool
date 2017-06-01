@@ -11,7 +11,7 @@ public interface ReviewDao {
 
 	int countAll();
 	
-	List<Review> getPage(@Param("request")PageRequest req);
+	List<Review> getPage(@Param("request")PageRequest req,@Param("classId")Integer classId);
 	
 	void insert(@Param("review")Review review);
 }

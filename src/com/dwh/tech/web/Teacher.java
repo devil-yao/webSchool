@@ -16,6 +16,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.alibaba.fastjson.JSON;
 import com.dwh.tech.common.Authority;
@@ -45,7 +46,7 @@ public class Teacher {
 	}
 	
 	@RequestMapping("/getTech")
-	public void getTeacher(HttpServletRequest request,Integer current,HttpServletResponse response) throws IOException{
+	public void getTeacher(HttpServletRequest request,@RequestParam(required = true)Integer current,HttpServletResponse response) throws IOException{
 		String type = request.getParameter("type").trim();
 		PageRequest  req = PageRequest.build(current, null);
 		PrintWriter out = response.getWriter();
@@ -77,7 +78,7 @@ public class Teacher {
 	}
 	
 	@RequestMapping("/iteacher")
-	public void iteacher(Integer pageCount,HttpServletResponse response) throws IOException{
+	public void iteacher(@RequestParam(required = true)Integer pageCount,HttpServletResponse response) throws IOException{
 		if(pageCount == null){
 			return;
 		}
@@ -101,6 +102,11 @@ public class Teacher {
 		return "teacherAdd";
 	}
 	
+	/**
+	 * 增加教师操作
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping("/addTechoperator")
 	public String addOperator(HttpServletRequest request){
 		request.removeAttribute("operater");
@@ -114,7 +120,7 @@ public class Teacher {
 			if(part != null){
 				String fil = part.getSubmittedFileName();
 				String fileName = TechUtil.fileName()+fil.substring(fil.lastIndexOf("."));
-				part.write("D:\\Tomcat\\images"+File.separatorChar+fileName);
+				part.write(request.getServletContext().getInitParameter("filepath")+File.separatorChar+fileName);
 				logger.debug("techName{}",techName);
 				User user = new User();
 				user.setCateId(new Integer(cateId));

@@ -3,7 +3,7 @@ function telConfirm(){
 	var reg=/^1[3578]\d{9}/;
 	var tel=$("#tel").val();
 	var tel_span=document.getElementById("tel_span");
-	if(tel.trim() == ""){
+	if($.trim(tel) == ""){
 		tel_span.innerHTML="* 手机号码不能为空！";
 		tel_span.style.color="red";
 		return false;
@@ -22,7 +22,7 @@ function telConfirm(){
 			async : false,
 			success:function(rs){
 //				alert(rs)
-				if(rs.trim() == 'true'){
+				if($.trim(rs) == 'true'){
 					flag = false;
 					tel_span.innerHTML="* 手机号码已存在！";
 					tel_span.style.color="red";
@@ -38,7 +38,7 @@ function telConfirm(){
 
 function namesConfirm(put){
 	var loginName=document.getElementById("name");
-	if($(put).val().trim() == ""){
+	if($(put).val() == ""){
 		loginName.innerHTML="* 登录名不能为空！";
 		loginName.style.color="red";
 		return false;
@@ -50,7 +50,7 @@ function namesConfirm(put){
 		data :{"loginName" : put.value},
 		async : false,
 		success:function(rs){
-			if(rs.trim() == "true"){
+			if($.trim(rs) == "true"){
 				flag = false;
 				loginName.innerHTML="* 用户名已存在！";
 				loginName.style.color="red";
@@ -75,7 +75,7 @@ var p = function(){
 	var pwd2 = /\d+/;			//数字
 	var pwd3 = /\W+/;			//特殊符号
 	var count = 0;
-	if($pwd.val().trim().length<6){
+	if($pwd.val().length<6){
 		$pwd_span.html("* 请输入至少六位密码");
 		$pwd_span.css({"color":"red"});
 		return false;
@@ -107,8 +107,8 @@ var p = function(){
 };
 
 function confirmpwd(){
-	var con = $("#confirmPassword").val().trim();
-	var pwd = $("#reg_pwd").val().trim();
+	var con = $("#confirmPassword").val();
+	var pwd = $("#reg_pwd").val();
 	if(con == pwd){
 		$("#confirm").html("");
 		return true;
@@ -150,7 +150,7 @@ function regin(){
 		async:true,
 		type:"post",
 		success:function(rs){
-			if(rs.trim() == "true"){
+			if($.trim(rs) == "true"){
 				alert("注册成功");
 				cambiar_login();
 			}else {

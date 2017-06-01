@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.dwh.tech.entity.User;
 import com.dwh.tech.service.QuestionService;
@@ -31,7 +32,7 @@ public class ExamController {
 	
 	
 	@RequestMapping("/exam")
-	public String intoExam(HttpServletRequest request,Integer type){
+	public String intoExam(HttpServletRequest request,@RequestParam(required = true)Integer type){
 		HttpSession session = request.getSession();
 		User u = (User)session.getAttribute("user");
 		if(u==null){

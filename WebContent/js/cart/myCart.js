@@ -118,7 +118,7 @@ function pay(){
 						"classId":$("."+oInput[i].value).val()
 					},
 				success:function(rs){
-					if(rs == 'true'){
+					if($.trim(rs) == 'true'){
 						flag++;
 					location.reload();
 					}

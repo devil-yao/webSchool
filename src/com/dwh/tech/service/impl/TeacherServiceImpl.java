@@ -21,6 +21,7 @@ public class TeacherServiceImpl implements TeacherService {
 	@Override
 	public List<User> getAllTeacher() {
 		// TODO Auto-generated method stub
+		System.out.println(teacherDao.getAllTeacher().get(0));
 		return teacherDao.getAllTeacher();
 	}
 

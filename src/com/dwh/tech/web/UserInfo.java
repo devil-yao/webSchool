@@ -52,7 +52,7 @@ public class UserInfo {
 			User user = (User)session.getAttribute("user");
 			if(part != null){
 //				String path = rb.getString("image.path");
-				String path = "D:\\Tomcat\\images";
+				String path = request.getServletContext().getInitParameter("filepath");
 				String fileName = part.getSubmittedFileName();
 				int split = fileName.indexOf(".");
 				String old = fileName.substring(split);

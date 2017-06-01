@@ -1,19 +1,29 @@
-
+//显示密码界面
 function showPwd(){
 	$("#info").css({"display":"none"});
 	$("#password").css({"display":"block"});
+	$("#mypwd").show();
 	$("#order").css({"display":"none"});
+	$("#myinfo").hide();
+	$("#myorder").hide();
 }
-
+//显示个人信息界面
 function showInfo(){
 	$("#password").css({"display":"none"});
 	$("#info").css({"display":"block"});
 	$("#order").css({"display":"none"});
+	$("#mypwd").hide();
+	$("#myinfo").show();
+	$("#myorder").hide();
 }
+//显示订单界面
 function showOrder(){
 	$("#password").css({"display":"none"});
 	$("#info").css({"display":"none"});
 	$("#order").css({"display":"block"});
+	$("#mypwd").hide();
+	$("#myinfo").hide();
+	$("#myorder").show();
 	getOrderList(1);
 }
 
@@ -72,7 +82,7 @@ function getOrderList(current){
 				processData: false,  // 告诉jQuery不要去处理发送的数据
 				contentType: false,   // 告诉jQuery不要去设置Content-Type请求头
 				success : function(rs){
-					if(rs == "false"){
+					if($.trim(rs) == "false"){
 						alert("系统繁忙,稍后再试");
 					}else{
 					alert("头像修改成功");
@@ -102,12 +112,12 @@ function updateUserInfo(){
 		return false;
 	}
 	//3.验证邮箱
-	var em = document.getElementById("u-email");
-	var sp = document.getElementById("sp_email");
-	var ema = email(em,sp);
-	if(!ema){
-		return false;
-	}
+//	var em = document.getElementById("u-email");
+//	var sp = document.getElementById("sp_email");
+//	var ema = email(em,sp);
+//	if(!ema){
+//		return false;
+//	}
 	
 	var update = $("#update");
 	$.ajax({
@@ -132,7 +142,7 @@ function telConfirm(){
 	var reg=/^1[3578]\d{9}/;
 	var tel=$("#phone").val();
 	var tel_span=document.getElementById("tel_span");
-	if(tel.trim() == ""){
+	if(tel == ""){
 		tel_span.innerHTML="* 手机号码不能为空！";
 		tel_span.style.color="red";
 		return false;
@@ -147,7 +157,7 @@ function telConfirm(){
 
 function namesConfirm(put){
 	var loginName=document.getElementById("name");
-	if($(put).val().trim() == ""){
+	if($(put).val() == ""){
 		loginName.innerHTML="* 登录名不能为空！";
 		loginName.style.color="red";
 		return false;
@@ -157,12 +167,12 @@ function namesConfirm(put){
 //em input的dom对象
 //sp span的dom对象
 function email(em,sp){
-	if($(em).val().trim() == ""){
+	if($(em).val() == ""){
 		return true;
 	}
 	var regex = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
 	if( !regex.test($(em).val()) ){
-		sp.innerHTML="* 请输入正确的邮箱！";
+		sp.innerTEXT="* 请输入正确的邮箱！";
 		sp.style.color="red";
 		return false;
 	}

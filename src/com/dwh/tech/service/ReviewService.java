@@ -9,7 +9,7 @@ public interface ReviewService {
 	
 	int countAll();
 	
-	List<Review> getPage(PageRequest req);
+	List<Review> getPage(PageRequest req,Integer classId);
 	
 	void insert(Review review);
 }

@@ -30,7 +30,7 @@ public interface LessonService {
 	
 	int countMyLesson(int techId);
 	
-	int selectId();
+	Integer selectId();
 	
 	void insert(Lesson lesson);
 }

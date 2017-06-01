@@ -90,7 +90,7 @@ public class LessonServiceImpl implements LessonService {
 	}
 
 	@Override
-	public int selectId() {
+	public Integer selectId() {
 		// TODO Auto-generated method stub
 		return lessonDao.selectId();
 	}

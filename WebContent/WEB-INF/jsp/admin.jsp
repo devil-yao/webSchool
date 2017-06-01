@@ -86,7 +86,7 @@
 		</div>
 	</div>
 	<div class="layui-body site-demo">
-		<div class="layui-tab layui-tab-card headertab" lay-allowclose="true" lay-filter="admintab" style="min-height: 538px;">
+		<div class="layui-tab layui-tab-card headertab" lay-allowclose="true" lay-filter="admintab" style="min-height: 538px;height: 647px;">
 			<ul class="layui-tab-title">
 
 			<div class="layui-tab-content">

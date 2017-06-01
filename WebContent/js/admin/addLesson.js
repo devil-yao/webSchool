@@ -65,9 +65,7 @@ function show(bn){
 			var num = document.getElementById("num");
 			var price = document.getElementById("price");
 			var ju = gg(num);
-			alert(ju)
 			var pri = judgePrice(price);
-			alert(pri)
 			if(ju && pri){
 				$("#saveTeacherForm").submit();
 			}

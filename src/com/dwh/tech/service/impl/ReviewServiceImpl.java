@@ -24,9 +24,9 @@ public class ReviewServiceImpl implements ReviewService {
 	}
 
 	@Override
-	public List<Review> getPage(PageRequest req) {
+	public List<Review> getPage(PageRequest req,Integer classId) {
 		// TODO Auto-generated method stub
-		return reviewDao.getPage(req);
+		return reviewDao.getPage(req,classId);
 	}
 
 	@Override

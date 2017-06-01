@@ -13,7 +13,6 @@
 <link type="text/css" href="css/admin/login.css" rel="stylesheet" />
 <script type="text/javascript" src = "js/jquery-3.1.0.min.js"></script>
 <script type="text/javascript" src = "js/login/gVerify.js"></script>
-
 </head>
 <body>
 	<div id="container">
@@ -43,7 +42,7 @@
 						</span>
 					</p>
 					<p class="space">
-						<input type="button" id="log" value="登录" class="login" />
+						<input type="button" id="log" onclick="judegLogin()" value="登录" class="login" />
 						<span id = "error">${message}</span> 
 					</p>
 				</form>
@@ -60,7 +59,7 @@
 			function enterSubmit(event) {
 				var keyCode = event.keyCode ? event.keyCode : event.which ? event.which : event.charCode;
 				if (keyCode == 13) {
-					$("#loginForm").submit();
+					judegLogin();
 					return false;
 				}
 			}
@@ -68,8 +67,9 @@ $(function(){
 	code = new GVerify({
 		id:"code"
 	});
-	$("#log").click(function(){
-		var flag = ${empty sys_status}
+})
+	function judegLogin(){
+		var flag = ${empty sys_status} 
 		 if( !flag){
 			alert("该管理员账号已被封停");
 			return false;
@@ -91,6 +91,7 @@ $(function(){
 			$("#error").text("请先输入验证码");
 			return false;
 		}
+		
 		if(code.validate(codeVal)){
 			$("#loginForm").submit();
 			return true;
@@ -98,7 +99,7 @@ $(function(){
 			$("#error").text("验证码错误");
 			return false;
 		}
-	})
-})			
+	}
+		
 </script>
 </html>

@@ -71,7 +71,7 @@ font-family: 宋体;
 										>
 										<dl class="paper-test">
 											<dt>
-												<em class="e-clock"></em><span id="timer">60分0秒</span>
+												<em class="e-clock"></em><span id="timer">15分</span>
 											</dt>
 											<dd>
 												<a class="prevent" href="javascript:void(0)" title="" onclick="submitAnswer()">我要交卷</a>
@@ -92,7 +92,7 @@ font-family: 宋体;
 														<tbody>
 														<% List<Question> list = (List<Question>)request.getAttribute("question"); 
 															int tr = list.size()/4;
-															if(tr == 0){tr= 1;}
+															/* if(tr == 0){tr= 1;} */
 															int td = list.size()%4;
 														%>
 														<c:forEach begin="1" end="<%=tr %>" varStatus="status" >

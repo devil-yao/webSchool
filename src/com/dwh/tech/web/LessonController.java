@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.alibaba.fastjson.JSON;
@@ -92,7 +93,7 @@ public class LessonController {
 	}
 	
 	@RequestMapping(value = "/lessonDetail")
-	public ModelAndView detail(Integer classId,HttpServletRequest request){
+	public ModelAndView detail(@RequestParam(required = true)Integer classId,HttpServletRequest request){
 		HttpSession session = request.getSession();
 		if(classId == null || "".equals(classId)){
 			return new ModelAndView("404");
@@ -108,7 +109,7 @@ public class LessonController {
 	}
 	
 	@RequestMapping("/goodLesson")
-	public void goodCourse(Integer pageCount,HttpServletResponse response) throws IOException{
+	public void goodCourse(@RequestParam(required = true)Integer pageCount,HttpServletResponse response) throws IOException{
 		PageRequest request = PageRequest.build(1, null);
 		if(pageCount == null){
 			return;
@@ -122,14 +123,14 @@ public class LessonController {
 	}
 	
 	@RequestMapping("/payForLesson")
-	public void pay(Integer classId,HttpSession session,HttpServletResponse response) throws IOException{
+	public void pay(@RequestParam(required = true)Integer classId,HttpSession session,HttpServletResponse response) throws IOException{
 		logger.debug("购买课程{}",classId);
 		PrintWriter out = response.getWriter();
 		User user = (User)session.getAttribute("user");
 		//先判断购物车是否存在，存在修改状态
 		Cart cart = cartService.getByClassId(classId, user.getId());
 		if(cart != null && cart.getStatus() == Status.NOTPAY.getStatus()){
-			cartService.updateCar(cart.getCartId(), Status.PAY.getStatus());
+			cartService.updateCar( Status.PAY.getStatus(),cart.getCartId());
 		}
 		//判断是否重复购买
 		OrderList ordre = orderListService.getOne(user.getId(),classId);
@@ -144,13 +145,14 @@ public class LessonController {
 			orderList.setPayTime(TechUtil.dateString(new Date()));
 			orderList.setUserId(user.getId());
 			orderListService.insertOrder(orderList);
+			lessonService.updateNumBuy(classId);
 			out.write("购买成功");
 		}
 		out.flush();
 		out.close();
 	}
 	@RequestMapping("/confLess")
-	public void confLess(Integer classId,HttpSession session,HttpServletResponse response) throws IOException{
+	public void confLess(@RequestParam(required = true)Integer classId,HttpSession session,HttpServletResponse response) throws IOException{
 		User user = (User)session.getAttribute("user");
 		PrintWriter out = response.getWriter();
 		OrderList order = orderListService.getOne(user.getId(), classId);

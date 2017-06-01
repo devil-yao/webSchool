@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.alibaba.fastjson.JSON;
 import com.dwh.tech.entity.Lesson;
@@ -31,7 +32,7 @@ public class TechDetail {
 	private LessonService lessonService;
 	
 	@RequestMapping("/tech")
-	public String techDetail(HttpServletRequest request,Integer techId){
+	public String techDetail(HttpServletRequest request,@RequestParam(required = true)Integer techId){
 		logger.debug("tech=>techId{}",techId);
 		if(techId == null || "".equals(techId)){
 			return "404";
@@ -42,7 +43,7 @@ public class TechDetail {
 	}
 	
 	@RequestMapping("/getLesson")
-	public void getLesson(Integer techId,HttpServletResponse response) throws IOException{
+	public void getLesson(@RequestParam(required = true)Integer techId,HttpServletResponse response) throws IOException{
 		if(techId == null){
 			return ;
 		}

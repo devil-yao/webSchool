@@ -84,7 +84,8 @@ public class Login {
 		user.setLogin_name(loginName);
 		user.setPassword(password);
 		user.setPhone(phone);
-		System.out.println(user);
+		user.setHead("head.jpg");
+		user.setCateId(0);
 		Boolean flag = userService.insert(user);
 		try {
 			response.getWriter().println(String.valueOf(flag));

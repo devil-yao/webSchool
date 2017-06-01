@@ -104,8 +104,9 @@ function getTech(current){
 		data:{"current":current,"pageCount":8,"teacherNme":$("#teacherNme").val(),"lessontype":$("#typeValue").val()},
 		dataType:"json",
 		success:function(rs){
+			$("#tbody").empty()
 			if(rs != null && rs.list != null && rs.list.length != 0){
-				$("#tbody").empty()
+				
 				for(var i = 0;i<rs.list.length;i++){
 					$("#tbody").append("<tr class='odd'><td align='center'>"+rs.list[i].login_name+"</td><td align='center'>"+rs.list[i].dec+"</td><td align='center'>"+rs.list[i].phone+"</td><td align='center'>"+rs.list[i].cateName+"</td><td align='center'><a href='myLesson?techId="+rs.list[i].id+"' class='layui-btn layui-btn-small' type='button'>查看课程</a>&nbsp;<a href='updateInfo?techId="+rs.list[i].id+"'><button class='layui-btn layui-btn-small' type='button'>修改</button></a></td></tr>")
 				}

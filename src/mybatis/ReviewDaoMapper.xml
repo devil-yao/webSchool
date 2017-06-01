@@ -8,7 +8,7 @@
 
 
 <select id="getPage" parameterType="com.dwh.tech.entity.PageRequest" resultType="com.dwh.tech.entity.Review">
-	select * from review order by revTime desc limit #{request.start},#{request.pageCount} 
+	select * from review where classId = #{classId} order by revTime desc limit #{request.start},#{request.pageCount} 
 </select>
 
 <insert id="insert" parameterType="com.dwh.tech.entity.Review">

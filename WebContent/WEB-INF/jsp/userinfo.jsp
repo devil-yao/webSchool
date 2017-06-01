@@ -132,7 +132,9 @@ a:hover {
 										<div class="">
 											<section class="u-r-tit-all">
 												<h2 class="unFw">
-													<span class="f-fH current"> 我的信息</span>
+													<span class="f-fH current" id="myinfo" > 我的信息</span>
+													<span class="f-fH current" id="mypwd" style="display: none;"> 密码修改</span>
+													<span class="f-fH current" id="myorder" style="display: none;"> 我的订单</span>
 												</h2>
 											</section>
 											<div class="u-r-all-box" id="p_tCont">

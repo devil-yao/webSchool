@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.alibaba.fastjson.JSON;
 import com.dwh.tech.common.Status;
@@ -108,7 +109,7 @@ public class CartOperator {
 		out.close();
 	}
 	@RequestMapping("/addCart")
-	public void addCart(HttpServletRequest request,HttpServletResponse response,Integer classId) throws IOException, ServletException{
+	public void addCart(HttpServletRequest request,HttpServletResponse response,@RequestParam(required = true)Integer classId) throws IOException, ServletException{
 		HttpSession session = request.getSession();
 		User user = (User)session.getAttribute("user");
 		PrintWriter out = response.getWriter();
@@ -118,7 +119,11 @@ public class CartOperator {
 		}
 		Cart cart = cartService.getByClassId(classId,user.getId());
 		if(cart == null){
-			
+			OrderList irder = orderListService.getOne(user.getId(), classId);
+			if(irder!= null){
+				out.write("false");
+				return;
+			}
 			Cart newcart = new Cart();
 			newcart.setClassId(classId);
 			newcart.setStatus(Status.NOTPAY.getStatus());
@@ -128,27 +133,28 @@ public class CartOperator {
 			logger.debug("购物车{}",newcart);
 			cartService.add(newcart);
 		}else{
+			
 			out.write("false");
 			out.flush();
 			out.close();
 		}
 	}
 	@RequestMapping("/getCount")
-	public void getCount(Integer userId,HttpServletResponse response) throws IOException{
+	public void getCount(@RequestParam(required = true)Integer userId,HttpServletResponse response) throws IOException{
 		logger.debug("参数{}",userId);
 		PrintWriter out = response.getWriter();
 		if(userId == null || "".equals(userId)){
-			out.println("0");
+			out.write("0");
 		}else{
 			int count = cartService.count(userId);
-			out.println(""+count);
+			out.write(""+count);
 		}
 		out.flush();
 		out.close();
 	}
 	
 	@RequestMapping("/deleteCart")
-	public void deleteCart(Integer cartId,HttpServletResponse response) throws IOException{
+	public void deleteCart(@RequestParam(required = true)Integer cartId,HttpServletResponse response) throws IOException{
 		PrintWriter out = response.getWriter();
 		if(cartId == null){
 			return;
@@ -160,7 +166,7 @@ public class CartOperator {
 	} 
 	
 	@RequestMapping("/payCart")
-	public void payCart(Integer cartId,Integer classId,HttpServletResponse response,HttpServletRequest request) throws IOException{
+	public void payCart(@RequestParam(required = true)Integer cartId,@RequestParam(required = true)Integer classId,HttpServletResponse response,HttpServletRequest request) throws IOException{
 		logger.debug("支付参数cartId{},classId{}",cartId,classId);
 		PrintWriter out = response.getWriter();
 		if(cartId == null || classId == null){
@@ -179,6 +185,7 @@ public class CartOperator {
 		orderList.setUserId(user.getId());
 		orderListService.insertOrder(orderList);
 		cartService.updateCar(Status.PAY.getStatus(), cartId);
+		lessonService.updateNumBuy(classId);
 		out.write("true");
 		out.flush();
 		out.close();

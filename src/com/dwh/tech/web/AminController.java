@@ -21,6 +21,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.alibaba.fastjson.JSON;
 import com.dwh.tech.common.Status;
@@ -149,6 +150,9 @@ public class AminController {
 	@RequestMapping("/adminlogin")
 	public String adminLogin(HttpServletRequest request){
 		HttpSession session = request.getSession();
+		if(session.getAttribute("admin") != null){
+			return "admin";
+		}
 		session.removeAttribute("message");
 		session.removeAttribute("sys_status");
 		session.removeAttribute("sysName");
@@ -301,7 +305,7 @@ public class AminController {
 	 * @throws IOException
 	 */
 	@RequestMapping("/adminGetTeacher")
-	public void adminGetTeacher(HttpServletRequest request,Integer current,Integer pageCount,HttpServletResponse response) throws IOException{
+	public void adminGetTeacher(HttpServletRequest request,@RequestParam(required = true) Integer current,@RequestParam(required = true)Integer pageCount,HttpServletResponse response) throws IOException{
 		logger.debug("当前页数{}",current); 
 		String techName = request.getParameter("teacherNme");
 		String type = request.getParameter("lessontype");
@@ -361,7 +365,7 @@ public class AminController {
 	 * @throws IOException
 	 */
 	@RequestMapping("/adminGetmyLesson")
-	public void getMylesson(Integer techId,Integer current,Integer pageCount,
+	public void getMylesson(@RequestParam(required = true)Integer techId,@RequestParam(required = true)Integer current,@RequestParam(required = true)Integer pageCount,
 			HttpServletResponse response) throws IOException{
 		PageRequest req = PageRequest.build(current, null);
 		req.setPageCount(pageCount);
@@ -384,7 +388,7 @@ public class AminController {
 	}
 	
 	@RequestMapping("/updateInfo")
-	public String updateInfo(Integer techId,HttpServletRequest request,
+	public String updateInfo(@RequestParam(required = true)Integer techId,HttpServletRequest request,
 			HttpServletResponse response) throws IOException{
 		
 		HttpSession session = request.getSession();
@@ -447,7 +451,7 @@ public class AminController {
 			String end = fileName.substring(fileName.lastIndexOf("."));
 			String name = TechUtil.fileName()+end;
 			try {
-				part.write("D:\\Tomcat\\images"+File.separatorChar+name);
+				part.write(request.getServletContext().getInitParameter("filepath")+File.separatorChar+name);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				request.setAttribute("operater", false);
@@ -525,14 +529,14 @@ public class AminController {
 			String fileName = part.getSubmittedFileName();
 			String end = fileName.substring(fileName.lastIndexOf("."));
 			String name = TechUtil.fileName()+end;
-			part.write("D:\\Tomcat\\images\\lesson"+File.separatorChar+name);
+			part.write(request.getServletContext().getInitParameter("filepath")+File.separatorChar+"lesson"+File.separatorChar+name);
 			
 			Lesson le = new Lesson();
 			
 			Integer cid = new Integer(cateId);
 			Integer num = new Integer(classNum);
 			Integer tid = new Integer(techId);
-			int classId = lesson.selectId();
+			int classId = lesson.selectId() == null?1:lesson.selectId();
 			
 			le.setTechId(tid);
 			le.setClassName(lessName);
@@ -556,7 +560,7 @@ public class AminController {
 				String videoName = video.getSubmittedFileName();
 				String type = videoName.substring(videoName.lastIndexOf("."));
 				String url = TechUtil.fileName()+type;
-				video.write("D:\\Tomcat\\images"+File.separatorChar+url);
+				video.write(request.getServletContext().getInitParameter("filepath")+File.separatorChar+url);
 				String chapterName = request.getParameter("chapter_"+i);
 				Video v = new Video();
 				v.setChapterName(chapterName);

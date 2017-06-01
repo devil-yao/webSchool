@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.dwh.tech.common.Status;
-import com.dwh.tech.entity.Cart;
 import com.dwh.tech.entity.OrderList;
 import com.dwh.tech.entity.User;
 import com.dwh.tech.entity.Video;

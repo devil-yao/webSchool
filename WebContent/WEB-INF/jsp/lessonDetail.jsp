@@ -295,6 +295,7 @@ cursor: pointer;
 				data:{classId:${lesson.classId}},
 				type:"get",
 				success:function(rs){
+					showTit();
 					alert(rs);
 				},
 				error:function(){
@@ -314,7 +315,7 @@ function judge(athis){
 			$(athis).attr("href","video_"+classId);
 		}else{ 
 		$.post("confLess",{"classId":classId},function(rs){
-			if(rs == "1"){
+			if($.trim(rs) == "1"){
 				window.location.href="video_"+classId;
 			}else{
 				alert("请先购买该课程");
@@ -336,7 +337,7 @@ function addCart(){
 		async:false,
 		success:function(rs){
 			showTit();
-			if(rs != null && rs.trim() == "false"){
+			if(rs != null && $.trim(rs) == "false"){
 				alert("您已添加或购买过该课程");
 			}else{
 				alert("添加购物车成功");
@@ -349,38 +350,66 @@ function addCart(){
 	};
 	//ajax添加购物车结束
 }
+//增加评论
 function addReview(){
-	if($("#commentContent").val() == ""){
-		return false;
-	}
+	//判断是否登录
+  if(${empty user}){ 
+		window.location.href="login";
+		return ;
+  } 
 
-	$.ajax({
-		url:"addView",
-		data:{
-			"conent":$("#commentContent").val(),
-			"classId":${lesson.classId} 
-		},
-		type:"get",
-		success:function(rs){
-			switch (rs) {
-			case "0":
-				getAllReview(1);
-				$("#commentContent").val("");
-				alert("评论成功")
-				break;
-
-			case "1":
-				window.location.href="login";
-				break;
-			case "2":
-				alert("系统异常，请稍后再试")
-				break;
-			case "3":
-				alert("教师用户不可评论")
-				break;
+	//判断是否购买
+	var flag = false;
+	if(${lesson.price == 0}){
+		flag = true;
+	}else{ 
+		$.ajax({
+			type:"post",
+			data:{"classId":<%=request.getParameter("classId")%>},
+			url:"confLess",
+			async:false,
+			success:function(rs){
+				if($.trim(rs) == "1"){
+					flag= true;
+				}else{
+					flag= false;
+					alert("请先购买该课程");
+				}
 			}
+		})
+	}
+	if(flag){
+		if($("#commentContent").val() == ""){
+			return false;
 		}
-	})
+		$.ajax({
+			url:"addView",
+			data:{
+				"conent":$("#commentContent").val(),
+				"classId":${lesson.classId} 
+			},
+			type:"get",
+			success:function(rs){
+				switch ($.trim(rs)) {
+				case "0":
+					getAllReview(1);
+					$("#commentContent").val("");
+					alert("评论成功")
+					break;
+				case "1":
+					window.location.href="login";
+					break;
+				case "2":
+					alert("系统异常，请稍后再试")
+					break;
+				case "3":
+					alert("教师用户不可评论")
+					break;
+				}
+			}
+		})
+	}
+	
 }
 function getAllReview(current){
 	/*分页5个  */
@@ -388,12 +417,12 @@ function getAllReview(current){
 		url:"getReview",
 		data:{
 			"current":current,
-			"pageCount":5
+			"pageCount":5,
+			"classId":${lesson.classId}
 		},
 	type:"get",
 	dataType:"json",
 	success:function(rs){
-		alert(JSON.stringify(rs))
 		/* "list":[{"classId":1,"head":"head.jpg","id":1,"revTime":"2017-05-09 14:52:19","review":"讲解很详细","userId":9}],"pageCount":5,"total":1 */
 		if(rs != null && rs.list != null && rs.list.length != 0){
 			$("#allReview").empty();

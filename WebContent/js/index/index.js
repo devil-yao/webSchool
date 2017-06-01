@@ -12,6 +12,7 @@ function exit(){
 		}
 	});
 }
+//精品课程
 function goodCourse(){
 	$.post("goodLesson",{"pageCount":"8"},function(rs){
 		if(rs == null || rs.length == 0){
@@ -23,7 +24,7 @@ function goodCourse(){
 	
 		$("#goodCourse").append("<li><div class='cc-l-wrap'><section class='course-img'>" +
 				"<a href='lessonDetail?classId="+rs[i].classId+"'>" +
-				"<img src='/images/lesson/"+rs[i].picture+"' class='img-responsive' alt='"+rs[i].className+"'>	</a></section><div class='coure-bg-g'><h3 class='hLh30 txtOf'>" +
+				"<img src='/images/lesson/"+rs[i].picture+"' class='img-responsive' height='150.5px' width='297.5px' alt='"+rs[i].className+"'>	</a></section><div class='coure-bg-g'><h3 class='hLh30 txtOf'>" +
 				"<a href='lessonDetail?classId="+rs[i].classId+"' title='"+rs[i].className+"' class='course-title fsize16 c-333'>"+rs[i].className+"</a></h3><section class='mt10 hLh20 of'><span class='fr'>" +
 				"<tt class='c-master fsize14 f-fM'>￥"+parseFloat(rs[i].price).toFixed(2)+"</tt></span><span class='fl jgAttr c-ccc f-fA'>" +
 				"<tt class='c-999 f-fA mr10'>"+rs[i].numBuy+"购买</tt><tt class='c-999 f-fA span-2'>"+rs[i].numLook+"浏览</tt>	</span></section></div></div></li>");
@@ -51,6 +52,7 @@ function goodCourse(){
 		}	
 	},"json");
 }
+//优秀教师
 function iteacher(){
 	$.post("iteacher",{"pageCount":"4"},function(rs){
 		if(rs == null || rs.length == 0){
